@@ -11,6 +11,92 @@
  <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"
    integrity="sha512-A7vV8IFfih/D732iSSKi20u/ooOfj/AGehOKq0f4vLT1Zr2Y+RX7C+w8A1gaSasGtRUZpF/NZgzSAu4/Gc41Lg=="
    crossorigin=""></script>
- </head>
-   <body> 
-      <h2>----Snacks----</h2>
+
+      <style>
+      table, th, td {
+          border: 5px solid black;
+          border-collapse: collapse;
+      }
+      th, td {
+          padding: 10px;
+          text-align: center;
+      }
+      table#t01 {
+          width: 100%;
+          background-color: #f1f1c1;
+      }
+      </style>
+
+      	<script language="javascript">
+      		function addRow(tableID) {
+
+      			var table = document.getElementById(tableID);
+
+      			var rowCount = table.rows.length;
+      			var row = table.insertRow(rowCount);
+
+      			var cell1 = row.insertCell(0);
+      			cell1.contentEditable="true";
+
+      			var cell2 = row.insertCell(1);
+      			cell2.contentEditable="true";
+
+      			var cell3 = row.insertCell(2);
+      			var element1 = document.createElement("input");
+      			element1.type = "checkbox";
+      			element1.name="chkbox[]";
+      			cell3.appendChild(element1);
+
+
+
+      		}
+
+      		function deleteRow(tableID) {
+      			try {
+      			var table = document.getElementById(tableID);
+      			var rowCount = table.rows.length;
+
+      			for(var i=0; i<rowCount; i++) {
+      				var row = table.rows[i];
+      				var chkbox = row.cells[2].childNodes[0];
+      				if(null != chkbox && true == chkbox.checked) {
+      					if(rowCount <= 1) {
+      						alert("Cannot delete all the rows.");
+      						break;
+      					}
+      					table.deleteRow(i);
+      					rowCount--;
+      					i--;
+      				}
+
+
+      			}
+      			}catch(e) {
+      				alert(e);
+      			}
+      		}
+
+      	</script>
+    </head>
+
+          <body bgcolor="#FFFFFF">
+          <br>
+      	<h2 align="center" ><u> SHOP NAME</u> </h2>
+      	<br>
+        <form method="post" >
+      	<TABLE id="t01" >
+      	<tr>
+          <th>Item Name</th>
+          <th>Price</th>
+      	<th>Delete</th>
+      	</tr>
+      	</TABLE>
+          <br>
+          <INPUT type="button" value="Add Row" onclick="addRow('t01')" />
+
+      	<INPUT type="button" value="Delete Row" onclick="deleteRow('t01')" />
+    <input type="submit" name="submit"value="Update"></input>
+</form>
+      </body>
+
+    </html>
