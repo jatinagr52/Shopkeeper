@@ -88,9 +88,22 @@ router.post('/',function(req,res,next){
 router.post('/add',function(req,res,next){
   refM.child(sess.id).update({
     item: req.body.item,
-    foodie: req.body.foodie,
+
   });
+  refM.child(sess.id).child(req.body.item).update({foodie: req.body.foodie,});
 });
+refM.child(sess.id).on('value',function(snapshot){
+router.post('/delete',function(req,res,next){
+  var menu=snapshot.val();
+  var keys=Object.keys(menu);
+  for(var i=0;i<keys.length;i++){
+    var k=keys[i];
+    if(req.body.Item==k){
+      refM.child(sess.id).child(req.body.item).remove();
+    }
+  }
+})
+})
 router.post('/wallet',function(req,res,next){
    myContract.methods.transfer(myweb.eth.coinbase,myweb.eth.getBalance(snapshot.address),{from:snapshot.address});
 
