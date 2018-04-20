@@ -92,6 +92,7 @@ router.post('/add',function(req,res,next){
   });
   refM.child(sess.id).child(req.body.item).update({foodie: req.body.foodie,});
 });
+
 refM.child(sess.id).on('value',function(snapshot){
 router.post('/delete',function(req,res,next){
   var menu=snapshot.val();
@@ -102,8 +103,16 @@ router.post('/delete',function(req,res,next){
       refM.child(sess.id).child(req.body.item).remove();
     }
   }
-})
-})
+});
+});
+
+router.post('/update',function(snapshot){
+  refM.child(sess.id).update({
+    item : req.body.Item,
+  });
+  refM.child(sess.id).child(req.body.Item).update({foodie: req.body.Foodie,});
+});
+
 router.post('/wallet',function(req,res,next){
    myContract.methods.transfer(myweb.eth.coinbase,myweb.eth.getBalance(snapshot.address),{from:snapshot.address});
 
